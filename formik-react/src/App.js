@@ -6,11 +6,14 @@ function App() {
     initialValues: {
       name: '',
       email: ''
+    },
+    onSubmit : values => {
+        console.log('form data', values)
     }
   })
-console.log("fomik submitt", formik.values)
+// console.log("fomik submitt", formik.values)
   return (
-    <div className="App container items-center justify-items-center py-7 ml-11" >
+    <div onSubmit={formik.handleSubmit} className="App container items-center justify-items-center py-7 ml-11" >
      <form className=' flex flex-col w-[30%] border border-l-4 gap-5'>
       <label className=' pt-3'>Your name:</label>
       <input
@@ -30,7 +33,7 @@ console.log("fomik submitt", formik.values)
       onChange={formik.handleChange}
       value={formik.values.email}
       />
-      <button className=' py-2 px-5 text-white bg-black border'>Submitt</button>
+      <button type='submitt' className=' py-2 px-5 text-white bg-black border'>Submitt</button>
      </form>
     </div>
   );
