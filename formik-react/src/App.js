@@ -1,41 +1,104 @@
 import './App.css'
 import { useFormik } from 'formik';
+import * as Yup from 'yup'
+
+const initialValues = {
+  name: 'habib',
+  email: '',
+  channel: ''
+}
+
+const onSubmit = values => {
+  console.log('Form data', values)
+}
+
+const validate = values => {
+  const errors = {}
+
+  if (!values.name) {
+    errors.name = 'Required'
+  }
+
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email format'
+  }
+
+  if (!values.channel) {
+    errors.channel = 'Required'
+  }
+
+  return errors
+}
+
+const validationSchema = Yup.object({
+  name: Yup.string().required('Required'),
+  email: Yup.string()
+    .email('Invalid email format')
+    .required('Required'),
+  channel: Yup.string().required('Required')
+})
+
 
 function App() {
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: ''
-    },
-    onSubmit : values => {
-        console.log('form data', values)
-    }
+    initialValues,
+    onSubmit,
+    validate,
+    validationSchema
   })
-// console.log("fomik submitt", formik.values)
+
+  console.log('formik.touched', formik.touched)
   return (
-    <div onSubmit={formik.handleSubmit} className="App container items-center justify-items-center py-7 ml-11" >
-     <form className=' flex flex-col w-[30%] border border-l-4 gap-5'>
-      <label className=' pt-3'>Your name:</label>
-      <input
-      className='border-2 rounded-md bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
-      type='text'
-      name='name'
-      placeholder='enter your name'
-      onChange={formik.handleChange}
-      value={formik.values.name}
-      />
-      <label className=' pt-3'>Your Email</label>
-      <input
-      className='border-2 rounded-md bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
-      type='email'
-      name='email'
-      placeholder='enter your email'
-      onChange={formik.handleChange}
-      value={formik.values.email}
-      />
-      <button type='submitt' className=' py-2 px-5 text-white bg-black border'>Submitt</button>
-     </form>
-    </div>
+    <form className='  bg-gray-200 rounded' onSubmit={formik.handleSubmit}>
+      <div className='form-control'>
+        <label className="block text-sm font-semibold text-gray-600" htmlFor='name'>Name</label>
+        <input
+          type='text'
+          id='name'
+          name='name'
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.name}
+        />
+        {formik.touched.name && formik.errors.name ? (
+          <div className='error'>{formik.errors.name}</div>
+        ) : null}
+      </div>
+
+      <div className='form-control'>
+        <label className="block text-sm font-semibold text-gray-600" htmlFor='email'>E-mail</label>
+        <input
+          type='email'
+          id='email'
+          name='email'
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+        />
+        {formik.touched.email && formik.errors.email ? (
+          <div className='error'>{formik.errors.email}</div>
+        ) : null}
+      </div>
+
+      <div className='form-control'>
+        <label className="block text-sm font-semibold text-gray-600" htmlFor='channel'>Channel</label>
+        <input
+          type='text'
+          id='channel'
+          name='channel'
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.channel}
+        />
+        {formik.touched.channel && formik.errors.channel ? (
+          <div className='error'>{formik.errors.channel}</div>
+        ) : null}
+      </div>
+
+      <button  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" type='submit'>Submit</button>
+    </form>
   );
 }
 
