@@ -33,11 +33,11 @@ const validate = values => {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Required'),
+  name: Yup.string().required('Required!'),
   email: Yup.string()
     .email('Invalid email format')
-    .required('Required'),
-  channel: Yup.string().required('Required')
+    .required('Required!'),
+  channel: Yup.string().required('Required!')
 })
 
 
@@ -45,7 +45,7 @@ function App() {
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validate,
+   // validate,
     validationSchema
   })
 
