@@ -1,6 +1,5 @@
 import React from "react";
-import "./Newform.css";
-import { Form, Formik, Field} from "formik";
+import { Form, Formik, Field, ErrorMessage} from "formik";
 import * as Yup from "yup";
 
 const initialValues = {
@@ -58,9 +57,7 @@ const Newform = () => {
             id="name"
             name="name"
           />
-          {formik.touched.name && formik.errors.name ? (
-            <div className="error">{formik.errors.name}</div>
-          ) : null}
+         <ErrorMessage className=" error" name="name" />
         </div>
 
         <div className="form-control">
@@ -76,9 +73,7 @@ const Newform = () => {
             name="email"
           
           />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="error">{formik.errors.email}</div>
-          ) : null}
+          <ErrorMessage className=" error" name="email" />
         </div>
 
         <div className="form-control">
@@ -94,9 +89,7 @@ const Newform = () => {
             name="channel"
           
           />
-          {formik.touched.channel && formik.errors.channel ? (
-            <div className="error">{formik.errors.channel}</div>
-          ) : null}
+         <ErrorMessage className=" error" name="channel" />
         </div>
 
         <button

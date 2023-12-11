@@ -1,6 +1,6 @@
 import './App.css'
 import Newform from './COMPONENTS/Newform';
-
+import './COMPONENTS/Newform.css'
 
 function App() {
   return (
